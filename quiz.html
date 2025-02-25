@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Quiz 💖💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ff99cc, #d8a8ff);
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        button {
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .answer-image {
+            display: none;
+            width: 200px;
+            margin: 10px auto;
+        }
+        #giftButton {
+            display: none;
+            background-color: #ff4081;
+        }
+        #giftMessage {
+            display: none;
+            font-size: 18px;
+            color: #d81b60;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>💖 Welcome to the Quiz Cuteei! 💖</h2>
+        <p>Enter your name, beautiful! 😊💘</p>
+        <input type="text" id="userName" placeholder="Your Name">
+        <button onclick="startQuiz()">Start 💕</button>
+        <p id="question" style="display:none;"></p>
+        <div id="options"></div>
+        <img id="answerImage" class="answer-image" src="" alt="Answer Image">
+        <p id="result"></p>
+        <button id="giftButton" onclick="showGift()">Open Your Special Gift 🎁</button>
+        <p id="giftMessage">💖 Dear <span id="giftUserName"></span>, you are an amazing and wonderful person! 🌸 Your kindness, intelligence, and warmth make the world brighter. Keep being the incredible person you are, and always believe in your dreams! 💕</p>
+    </div>
+
+    <script>
+        let userName = "";
+        const quiz = [
+            {question: "What’s my favorite color?", options: ["Red", "Blue", "Black", "Pink"], correct: "Blue", reply: "Wow, you know me so well! 💙", img: "https://i.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"},
+            {question: "Where would I take you on our dream date?", options: ["Beach", "Mountains", "Fancy Dinner", "Home Movie Night"], correct: "Beach", reply: "I’d love to walk by the waves with you! 🌊", img: "https://i.giphy.com/media/mlvseq9yvZhba/giphy.gif"},
+            {question: "What’s my go-to comfort food?", options: ["Pizza", "Ice Cream", "Sushi", "Pasta"], correct: "Pasta", reply: "Let’s have a pasta date soon! 🍝", img: "https://i.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"}
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        
+        function startQuiz() {
+            userName = document.getElementById("userName").value || "Cutie";
+            document.getElementById("userName").style.display = "none";
+            document.querySelector("button").style.display = "none";
+            loadQuestion();
+        }
+        
+        function loadQuestion() {
+            if (currentQuestion < quiz.length) {
+                document.getElementById("question").style.display = "block";
+                document.getElementById("question").textContent = quiz[currentQuestion].question;
+                let optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                document.getElementById("answerImage").style.display = "none";
+                quiz[currentQuestion].options.forEach(option => {
+                    let btn = document.createElement("button");
+                    btn.textContent = option;
+                    btn.onclick = () => checkAnswer(option);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                document.getElementById("question").textContent = `💖 Quiz Over, ${userName}! 💖`;
+                document.getElementById("options").innerHTML = "";
+                document.getElementById("giftUserName").textContent = userName;
+                document.getElementById("giftButton").style.display = "block";
+            }
+        }
+        
+        function checkAnswer(answer) {
+            let correctAnswer = quiz[currentQuestion].correct;
+            let reply = quiz[currentQuestion].reply;
+            let imageSrc = quiz[currentQuestion].img;
+            
+            document.getElementById("answerImage").src = imageSrc;
+            document.getElementById("answerImage").style.display = "block";
+            
+            if (answer === correctAnswer) {
+                score++;
+                alert(`${reply} 🥰💕`);
+            } else {
+                alert("Oops, but I still adore you! 😘💖");
+            }
+            currentQuestion++;
+            setTimeout(loadQuestion, 2000);
+        }
+        
+        function showGift() {
+            document.getElementById("giftButton").style.display = "none";
+            document.getElementById("giftMessage").style.display = "block";
+        }
+        
+        window.onload = () => {
+            document.getElementById("question").style.display = "none";
+        };
+    </script>
+</body>
+</html>
